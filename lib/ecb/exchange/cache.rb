@@ -4,12 +4,16 @@ module ECB
 
       KEY_PREFIX = "ecb_daily_exchange_rate-"
 
-      def write(key, value)
+      def self.write(key, value)
         backend.write(cache_key(key), value)
       end
 
-      def read(key)
+      def self.read(key)
         backend.read(cache_key(key))
+      end
+
+      def self.clear
+        backend.clear
       end
 
       # configure a backend cache object
@@ -21,7 +25,7 @@ module ECB
 
       # use Rails.cache by default if present, otherwise a cache object must be
       # set (that responds to read and write methods)
-      def backend
+      def self.backend
         @@backend ||= begin
           if defined?(Rails) && Rails.cache
             Rails.cache
@@ -33,7 +37,7 @@ module ECB
 
       # since this cache may be shared with other objects
       # a prefix is used in all cache keys
-      def cache_key(key)
+      def self.cache_key(key)
         "#{KEY_PREFIX}#{key}"
       end
     end

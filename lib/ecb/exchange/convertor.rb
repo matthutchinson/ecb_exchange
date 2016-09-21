@@ -35,7 +35,7 @@ module ECB
       private
 
       def self.cache
-        @@cache ||= ECB::Exchange::Cache.new
+        @@cache ||= ECB::Exchange::Cache
       end
     end
   end
