@@ -1,7 +1,5 @@
 # ECB Exchange Convertor
 
-TODO: provide more information...
-
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -22,6 +20,10 @@ methods. By default the `Rails.cache` object will be used if it is available.
 Or you can configure your own cache backend store (in an initializer) like so;
 
     ECB::Exchange::Cache.backend =  # your cache here ...
+
+If no backend cache store is available this error will be raised:
+
+   ECB::Exchange::CacheBackendError
 
 All rates stored in the cache are name-spaced with a key prefix.
 
@@ -45,9 +47,18 @@ You can adjust which endpoint rates are fetched from in an initializer like so;
 
     ECB::Exchange::XMLFeed.endpoint = "http://my-awesome-service.com/feed.xml"
 
-The XML feed must conform the standard [ECB
+The XML feed must match the standard [ECB
 rates](http://www.ecb.europa.eu/stats/eurofxref/eurofxref-hist-90d.xml) structure.
 
+## Errors
+
+Not all dates and rates may be available, or the feed server may be down. You
+should consider how to handle the following errors.
+
+* `ECB::Exchange::DateNotFoundError`
+* `ECB::Exchange::CurrencyNotFoundError`
+* `ECB::Exchange::ResponseError`
+* `ECB::Exchange::ParseError`
 
 ## Development
 
