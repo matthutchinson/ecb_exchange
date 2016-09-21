@@ -1,6 +1,5 @@
 $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
-require 'ecb/exchange'
-require 'exchange_rate'
+require 'ecb_exchange'
 require 'minitest/autorun'
 require 'webmock/minitest'
 
