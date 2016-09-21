@@ -4,34 +4,34 @@ module ECB
 
       KEY_PREFIX = "ecb_daily_exchange_rate-"
 
+      # allow a configurable backend cache object
+      class << self
+        attr_accessor :backend
+      end
+
       def self.write(key, value)
-        backend.write(cache_key(key), value)
+        store.write(cache_key(key), value)
       end
 
       def self.read(key)
-        backend.read(cache_key(key))
+        store.read(cache_key(key))
       end
 
       def self.clear
-        backend.clear
-      end
-
-      # configure a backend cache object
-      def self.backend=(new_backend)
-        @@backend = new_backend
+        store.clear
       end
 
       private
 
       # use Rails.cache by default if present, otherwise a cache object must be
-      # set (that responds to read and write methods)
-      def self.backend
-        @@backend ||= begin
-          if defined?(Rails) && Rails.cache
-            Rails.cache
-          else
-            raise ECB::Exchange::CacheBackendError
-          end
+      # set (that responds to read, write, clear methods)
+      def self.store
+        if backend
+          backend
+        elsif defined?(Rails) && Rails.cache
+          Rails.cache
+        else
+          raise ECB::Exchange::CacheBackendError
         end
       end
 

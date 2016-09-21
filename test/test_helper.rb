@@ -5,13 +5,16 @@ require 'minitest/autorun'
 require 'webmock/minitest'
 
 # helper to load fixtures
-
 FIXTURE_DIR = File.expand_path(File.dirname(__FILE__)+"/fixtures/")
-
 def response_fixture(filename)
   File.read("#{FIXTURE_DIR}/responses/#{filename}")
 end
 
+# helper to access the cache
+def cache
+  ECB::Exchange::Cache
+end
+
 # always use an in memory cache for tests
 require "active_support"
-ECB::Exchange::Cache.backend = ActiveSupport::Cache::MemoryStore.new
+cache.backend = ActiveSupport::Cache::MemoryStore.new

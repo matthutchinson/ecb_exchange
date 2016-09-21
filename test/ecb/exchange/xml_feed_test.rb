@@ -2,7 +2,6 @@ require File.expand_path(File.dirname(__FILE__)+'../../../test_helper')
 
 describe ECB::Exchange::XMLFeed do
 
-
   describe 'fetching XML' do
 
     describe 'with a valid response' do
@@ -101,11 +100,5 @@ describe ECB::Exchange::XMLFeed do
         assert_equal exception.message, "parsing XML from '#{ECB::Exchange::XMLFeed.endpoint}' failed"
       end
     end
-  end
-
-  private
-
-  def cache
-    ECB::Exchange::Cache
   end
 end
