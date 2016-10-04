@@ -2,10 +2,13 @@ require 'test_helper'
 
 describe ExchangeRate do
 
+  before do
+    cache.clear
+  end
+
   describe 'with cached rates' do
 
     before do
-      cache.clear
       cache.write('2016-01-01', { 'USD' => 0.87217, 'CHF' => 0.9912134 })
     end
 
