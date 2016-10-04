@@ -25,7 +25,7 @@ describe ECB::Exchange::XMLFeed do
       it 'should cache rates from feed' do
         assert_equal cache.read('2016-06-24'), nil
 
-        rates = ECB::Exchange::XMLFeed.fetch
+        ECB::Exchange::XMLFeed.fetch
         assert_equal cache.read('2016-06-24').length, 32
         assert_equal cache.read('2016-06-24')['USD'], 1.1066
       end
@@ -33,7 +33,7 @@ describe ECB::Exchange::XMLFeed do
       it 'should not overwrite existing cached rates for a given date' do
         cache.write('2016-06-24', { 'USD' => 1337 })
 
-        rates = ECB::Exchange::XMLFeed.fetch
+        ECB::Exchange::XMLFeed.fetch
         assert_equal cache.read('2016-06-24').length, 1
         assert_equal cache.read('2016-06-24')['USD'], 1337
       end
@@ -89,7 +89,7 @@ describe ECB::Exchange::XMLFeed do
       end
 
       it 'should raise an error if XML parsing fails' do
-        stubbed_request = stub_request(:get, ECB::Exchange::XMLFeed.endpoint).to_return(
+        stub_request(:get, ECB::Exchange::XMLFeed.endpoint).to_return(
           body: response_fixture('invalid_feed.xml')
         )
 
