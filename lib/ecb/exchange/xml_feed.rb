@@ -1,4 +1,5 @@
 require "rexml/document"
+require "uri"
 
 module ECB
   module Exchange
