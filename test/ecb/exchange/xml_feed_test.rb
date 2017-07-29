@@ -23,7 +23,7 @@ describe ECB::Exchange::XMLFeed do
       end
 
       it 'should cache rates from feed' do
-        assert_equal cache.read('2016-06-24'), nil
+        assert_nil cache.read('2016-06-24')
 
         ECB::Exchange::XMLFeed.fetch
         assert_equal cache.read('2016-06-24').length, 32

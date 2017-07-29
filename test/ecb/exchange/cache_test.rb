@@ -30,17 +30,6 @@ describe ECB::Exchange::Cache do
       assert_equal cache.backend, dummy_cache
     end
 
-    it 'should default to using the Rails.cache if it is defined' do
-      class Rails
-        def self.cache
-          # dummy cache
-        end
-      end
-
-      cache.backend = nil
-      assert_equal cache.backend, Rails.cache
-    end
-
     after do
       cache.backend = @default_cache_store
     end

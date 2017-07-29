@@ -51,7 +51,7 @@ Gem::Specification.new do |spec|
 
   # testing
   # use latest Rails version in tests (for cache testing)
-  spec.add_development_dependency('activesupport', '~> 5.0.0.1')
+  spec.add_development_dependency('activesupport', '~> 5.1.2')
   spec.add_development_dependency "minitest"
   spec.add_development_dependency "webmock"
 end
