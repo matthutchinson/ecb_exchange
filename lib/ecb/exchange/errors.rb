@@ -1,34 +1,28 @@
 module ECB
   module Exchange
+    class Error < StandardError; end
 
-    class DateNotFoundError < StandardError
+    class DateNotFoundError < Error
       def initialize(date)
         super("#{date} is missing or unavailable")
       end
     end
 
-    class CurrencyNotFoundError < StandardError
+    class CurrencyNotFoundError < Error
       def initialize(currency_code)
         super("#{currency_code} is missing or unavailable")
       end
     end
 
-
-    class ResponseError < StandardError
+    class ResponseError < Error
       def initialize(url, error_details)
         super("fetching '#{url}' failed - #{error_details}")
       end
     end
 
-    class ParseError < StandardError
+    class ParseError < Error
       def initialize(url)
         super("parsing XML from '#{url}' failed")
-      end
-    end
-
-    class CacheBackendError < StandardError
-      def initialize
-        super("No backend set for caching rates, set one with `ECB::Exchange::Cache.backend =`")
       end
     end
   end

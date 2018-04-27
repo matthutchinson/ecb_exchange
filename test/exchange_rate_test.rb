@@ -39,7 +39,7 @@ describe ExchangeRate do
         body: response_fixture('eurofxref-hist-90d.xml')
       )
 
-      multiplier = ExchangeRate.at('2016-06-24', 'USD', 'JPY', fetch: true)
+      multiplier = ExchangeRate.at('2016-06-24', 'USD', 'JPY')
       assert_requested stubbed_request
       assert_equal multiplier, 102.322429062
     end

@@ -1,7 +1,7 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'ecb/exchange/version'
+require 'ecb/exchange'
 
 Gem::Specification.new do |spec|
   spec.name          = "ecb_exchange"
@@ -51,7 +51,7 @@ Gem::Specification.new do |spec|
 
   # testing
   # use latest Rails version in tests (for cache testing)
-  spec.add_development_dependency('activesupport', '~> 5.1.2')
+  spec.add_development_dependency('activesupport', '~> 5.2.0')
   spec.add_development_dependency "minitest"
   spec.add_development_dependency "webmock"
 end

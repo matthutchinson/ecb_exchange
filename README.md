@@ -14,16 +14,15 @@ And then execute:
 
 ## Requirements
 
-This gem requires a working cache object that responds to read/write and clear
-methods. By default the `Rails.cache` object will be used if it is available.
+This gem requires a working cache object that responds to read/write methods. By
+default the `Rails.cache` object will be used if it is available.
 
 Or you can configure your own cache backend store (in an initializer) like so;
 
     ECB::Exchange::Cache.backend =  # your cache here ...
 
-If no backend cache store is available this error will be raised:
-
-   ECB::Exchange::CacheBackendError
+If no backend cache store is available a `NullBackend` will be used and nothing
+will be cached.
 
 All rates stored in the cache are name-spaced with a key prefix.
 
@@ -38,12 +37,9 @@ for an exchange rate on a given day like so:
 
     ExchangeRate.at('2016-01-22', 'USD', 'GBP')
 
-If the cache is empty and you want to grab exchange rates, pass the `fetch`
-option:
-
-    ExchangeRate.at('2016-01-22', 'USD', 'GBP', fetch: true)
-
-You can adjust which endpoint rates are fetched from in an initializer like so;
+If the cache is empty rates will be fetched from the endpoint and the cache will
+be populated. You can adjust which endpoint rates are fetched from in an
+initializer like so;
 
     ECB::Exchange::XMLFeed.endpoint = "http://my-awesome-service.com/feed.xml"
 

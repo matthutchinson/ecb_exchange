@@ -37,7 +37,7 @@ describe ECB::Exchange::Convertor do
         stubbed_request = stub_request(:get, ECB::Exchange::XMLFeed.endpoint).to_return(
           body: response_fixture('eurofxref-hist-90d.xml')
         )
-        rates = ECB::Exchange::Convertor.find_rates('2016-06-24', fetch: true)
+        rates = ECB::Exchange::Convertor.find_rates('2016-06-24')
         assert_requested stubbed_request
         assert_equal rates.values_at('USD', 'JPY', 'BGN'), [1.1066, 113.23, 1.9558]
       end
