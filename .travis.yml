@@ -1,8 +1,29 @@
 sudo: false
 language: ruby
+cache: bundler
 rvm:
  - 2.1.10
- - 2.2.8
- - 2.3.5
- - 2.4.2
-before_install: gem install bundler -v 1.12.5
+ - 2.2.9
+ - 2.3.6
+ - 2.4.3
+ - 2.5.1
+ - ruby-head
+
+before_install:
+ - gem update --system
+ - gem install bundler
+
+matrix:
+  allow_failures:
+   - rvm: ruby-head
+
+env:
+  global:
+   - CC_TEST_REPORTER_ID=2a6d225e3f463601e4e8e1b7a2f2a7c6c6b58dac59ccf77d03e784e3cc19a866
+   - GIT_COMMITTED_AT=$(if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then git log -1 --pretty=format:%ct; else git log -1 --skip 1 --pretty=format:%ct; fi)
+before_script:
+ - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+ - chmod +x ./cc-test-reporter
+ - ./cc-test-reporter before-build - GIT_COMMITTED_AT=$(if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then git log -1 --pretty=format:%ct; else git log -1 --skip 1 --pretty=format:%ct; fi)
+after_script:
+ - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT

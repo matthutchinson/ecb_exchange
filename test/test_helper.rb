@@ -1,3 +1,7 @@
+if ENV['COVERAGE']
+  require 'simplecov'
+end
+
 require 'ecb_exchange'
 require 'minitest/autorun'
 require 'webmock/minitest'

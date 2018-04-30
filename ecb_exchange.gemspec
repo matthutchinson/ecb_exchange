@@ -50,6 +50,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rdoc"
 
   # testing
-  spec.add_development_dependency "minitest"
   spec.add_development_dependency "webmock"
+  spec.add_development_dependency "minitest"
+  spec.add_development_dependency "simplecov"
 end
