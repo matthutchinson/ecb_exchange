@@ -44,14 +44,12 @@ Gem::Specification.new do |spec|
   # dev gems
   spec.add_development_dependency "bundler"
   spec.add_development_dependency "rake"
-  spec.add_development_dependency "byebug"
+  spec.add_development_dependency "pry-byebug"
 
   # docs
   spec.add_development_dependency "rdoc"
 
   # testing
-  # use latest Rails version in tests (for cache testing)
-  spec.add_development_dependency('activesupport', '~> 5.2.0')
   spec.add_development_dependency "minitest"
   spec.add_development_dependency "webmock"
 end

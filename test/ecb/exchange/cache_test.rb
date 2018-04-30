@@ -1,37 +1,44 @@
-require File.expand_path(File.dirname(__FILE__)+'../../../test_helper')
+require File.expand_path(File.dirname(__FILE__) + "../../../test_helper")
 
-describe ECB::Exchange::Cache do
+class ECB::ExchangeCache < Minitest::Test
+  def setup
+    cache.backend = nil
+    clear_cache
+  end
 
-  it 'should read/write from the cache backend with a key prefix' do
+  def test_writing_and_reading_from_backend_with_key_prefix
     assert_nil cache.read('some-key')
 
     cache.write('some-key', 'some-value')
     assert_equal cache.read('some-key'), 'some-value'
-    assert_equal cache.backend.read("#{cache::KEY_PREFIX}some-key"), 'some-value'
+    assert_equal cache.store.read("#{cache::KEY_PREFIX}-some-key"), 'some-value'
   end
 
-  it 'should clear the cache backend' do
-    cache.write('some-key', 'some-value')
-    assert_equal cache.read('some-key'), 'some-value'
-
-    cache.clear
-    assert_nil cache.read('some-key')
+  def test_uses_backend_cache_if_set
+    cache.backend = HashCache.cache
+    assert_kind_of HashCache, cache.store
   end
 
-  describe 'configuring cache' do
-    before do
-      @default_cache_store = cache.backend
+  def test_uses_backend_cache_if_set_and_rails_cache_available
+    cache.backend = HashCache.cache
+    Rails.stub(:cache, RailsCache.cache) do
+      assert_kind_of HashCache, cache.store
     end
+  end
 
-    it 'should allow the cache backend to be configured' do
-      dummy_cache = OpenStruct.new
-
-      cache.backend = dummy_cache
-      assert_equal cache.backend, dummy_cache
+  def test_uses_rails_cache_when_available_and_no_backend_set
+    Rails.stub(:cache, RailsCache.cache) do
+      assert_kind_of RailsCache, cache.store
     end
+  end
 
-    after do
-      cache.backend = @default_cache_store
-    end
+  def test_uses_memory_store_when_no_backend_set_or_rails_cache_available
+    assert_kind_of ECB::Exchange::MemoryCache, cache.store
   end
 end
+
+# caching test classes
+class HashCache < ECB::Exchange::MemoryCache; end
+class RailsCache < ECB::Exchange::MemoryCache; end
+# dummy Rails class
+class Rails; def self.cache; end; end

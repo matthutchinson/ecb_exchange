@@ -3,7 +3,6 @@ module ECB
     class Cache
       KEY_PREFIX = "ecb_exchange_rates_for_date".freeze
 
-      # allow a configurable backend
       class << self
         attr_accessor :backend
       end
@@ -16,15 +15,15 @@ module ECB
         store.read(cache_key(key))
       end
 
-      # uses backend if set (must respond to read, write) otherwise Rails.cache
-      # will be used (if present) otherwise an in-memory cache
+      # use backend if set (must respond to read, write), then Rails.cache will
+      # be used (if available) or we will fall back to an in-memory cache
       def self.store
         if backend
           backend
         elsif defined?(Rails) && Rails.cache
           Rails.cache
         else
-          MemoryCache
+          MemoryCache.cache
         end
       end
 
@@ -32,22 +31,6 @@ module ECB
         def self.cache_key(key)
           "#{KEY_PREFIX}-#{key}"
         end
-    end
-
-    class MemoryCache
-      @store = {}
-
-      def self.read(key)
-        @store[key]
-      end
-
-      def self.write(key, value)
-        @store[key] = value
-      end
-
-      def self.clear
-        @store.clear
-      end
     end
   end
 end

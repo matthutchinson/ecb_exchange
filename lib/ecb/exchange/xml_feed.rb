@@ -18,14 +18,20 @@ module ECB
         @endpoint = URI(new_endpoint)
       end
 
-      def self.rates(date)
+      def self.rates(date, refresh: false)
         if date > Date.today
           raise ArgumentError.new("invalid date, must be today or in the past")
         end
 
         # find rates in cache, or fetch (and cache)
         date  = date.to_s
-        rates = Cache.read(date) || fetch[date]
+        rates = begin
+          if refresh
+            fetch[date]
+          else
+            Cache.read(date) || fetch[date]
+          end
+        end
         rates ? rates : raise(DateNotFoundError.new(date))
       end
 
@@ -37,7 +43,7 @@ module ECB
             response = http.get(endpoint.path)
             daily_rates = {}
 
-            if response.code == "200"
+            if response.code == "200" && !response.body.empty?
               parse(response.body) do |date, rates|
                 daily_rates[date] = rates
                 # dont overwrite existing cached rates
