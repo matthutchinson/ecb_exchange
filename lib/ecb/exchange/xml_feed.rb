@@ -18,20 +18,14 @@ module ECB
         @endpoint = URI(new_endpoint)
       end
 
-      def self.rates(date, refresh: false)
+      def self.rates(date)
         if date > Date.today
           raise ArgumentError.new("invalid date, must be today or in the past")
         end
 
         # find rates in cache, or fetch (and cache)
         date  = date.to_s
-        rates = begin
-          if refresh
-            fetch[date]
-          else
-            Cache.read(date) || fetch[date]
-          end
-        end
+        rates = Cache.read(date) || fetch[date]
         rates ? rates : raise(DateNotFoundError.new(date))
       end
 
@@ -43,7 +37,7 @@ module ECB
             response = http.get(endpoint.path)
             daily_rates = {}
 
-            if response.code == "200" && !response.body.empty?
+            if response.code == "200"
               parse(response.body) do |date, rates|
                 daily_rates[date] = rates
                 # dont overwrite existing cached rates
@@ -66,8 +60,10 @@ module ECB
         end
 
         def self.parse(xml)
-          xml_doc = REXML::Document.new(xml, ignore_whitespace_nodes: :all)
-          xml_doc.elements["//Cube"].each do |element|
+          elements= REXML::Document.new(xml, ignore_whitespace_nodes: :all).elements["//Cube"]
+          raise ParseError.new(endpoint) unless elements
+
+          elements.each do |element|
             # map currency rates into a hash with currency keys, rate values
             rates = element.children.map(&:attributes).inject({}) do |memo, currency_with_rate|
               memo[currency_with_rate['currency']] = currency_with_rate['rate'].to_f

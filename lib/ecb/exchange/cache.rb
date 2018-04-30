@@ -15,8 +15,8 @@ module ECB
         store.read(cache_key(key))
       end
 
-      # use backend if set (must respond to read, write), then Rails.cache will
-      # be used (if available) or we will fall back to an in-memory cache
+      # use backend if set (must respond to read, write), otherwise Rails.cache
+      # will be used (if available) or we fall back to use an in-memory cache
       def self.store
         if backend
           backend
