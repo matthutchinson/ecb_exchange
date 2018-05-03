@@ -25,60 +25,62 @@ module ECB
 
         # find rates in cache, or fetch (and cache)
         date  = date.to_s
-        rates = Cache.read(date) || fetch[date]
+        rates = Cache.read(date) || fetch_and_cache[date]
         rates ? rates : raise(DateNotFoundError.new(date))
       end
 
       private
 
-        def self.fetch
-          begin
-            http = Net::HTTP.new(endpoint.host, endpoint.port)
-            response = http.get(endpoint.path)
-            daily_rates = {}
-
-            if response.code == "200"
-              parse(response.body) do |date, rates|
-                daily_rates[date] = rates
-                # dont overwrite existing cached rates
-                unless Cache.read(date)
-                  Cache.write(date, rates)
-                end
-              end
-
-              daily_rates
-            else
-              raise ResponseError.new(endpoint, "status: #{response.code}")
-            end
-          rescue SocketError, Timeout::Error, Errno::EINVAL, Errno::ECONNRESET,
-            Errno::EHOSTUNREACH, EOFError, Errno::ECONNREFUSED, Errno::ETIMEDOUT,
-            Net::HTTPBadResponse, Net::HTTPHeaderSyntaxError, Net::ProtocolError,
-            URI::InvalidURIError => exception
-            # catch and re-raise generic error with message
-            raise ResponseError.new(endpoint, exception.to_s)
+        def self.fetch_and_cache
+          daily_rates = {}
+          parse(get_xml) do |date, rates|
+            daily_rates[date] = rates
+            # dont overwrite existing cached rates
+            Cache.write(date, rates) unless Cache.read(date)
           end
+          daily_rates
+        end
+
+        def self.get_xml
+          resp = Net::HTTP.new(endpoint.host, endpoint.port).get(endpoint.path)
+          if resp.code == "200"
+            resp.body
+          else
+            raise ResponseError.new(endpoint, "status: #{resp.code}")
+          end
+        rescue SocketError, Timeout::Error, Errno::EINVAL, Errno::ECONNRESET,
+          Errno::EHOSTUNREACH, EOFError, Errno::ECONNREFUSED, Errno::ETIMEDOUT,
+          Net::HTTPBadResponse, Net::HTTPHeaderSyntaxError, Net::ProtocolError,
+          URI::InvalidURIError => exception
+          # catch and re-raise generic error with message
+          raise ResponseError.new(endpoint, exception.to_s)
         end
 
         def self.parse(xml)
-          elements= REXML::Document.new(xml, ignore_whitespace_nodes: :all).elements["//Cube"]
+          elements = rate_elements(xml)
           raise ParseError.new(endpoint) unless elements
 
           elements.each do |element|
             # map currency rates into a hash with currency keys, rate values
-            rates = element.children.map(&:attributes).inject({}) do |memo, currency_with_rate|
-              memo[currency_with_rate['currency']] = currency_with_rate['rate'].to_f
-              memo
-            end
+            # and always add the base EUR rate multiplier
+            rates = parse_element(element).merge('EUR' => 1.0)
 
-            # pass date and rates to block if available from feed
-            if element.attributes['time'] && !rates.empty?
-              # always add the base EURO rate multiplier
-              rates['EUR'] = 1.0
-              yield element.attributes['time'], rates
-            end
+            # pass date and rates to block
+            yield element.attributes['time'], rates
           end
         rescue REXML::ParseException, ArgumentError
           raise ParseError.new(endpoint)
+        end
+
+        def self.rate_elements(xml)
+          REXML::Document.new(xml, ignore_whitespace_nodes: :all).elements["//Cube"]
+        end
+
+        def self.parse_element(element)
+          element.children.map(&:attributes).inject({}) do |memo, currency_with_rate|
+            memo[currency_with_rate['currency']] = currency_with_rate['rate'].to_f
+            memo
+          end
         end
     end
   end
