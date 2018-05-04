@@ -1,11 +1,12 @@
 require 'date'
+require 'bigdecimal/util'
 
 module ECB
   module Exchange
     VERSION = "0.1.0".freeze
 
     def self.convert(amount, from:, to:, date: Date.today)
-      amount * rate(from: from, to: to, date: date)
+      amount.to_d * rate(from: from, to: to, date: date)
     end
 
     def self.rate(from:, to:, date: Date.today)
@@ -15,7 +16,7 @@ module ECB
         raise CurrencyNotFoundError.new(currency) unless rates[currency]
       end
 
-      rates[to] * (1.0 / rates[from])
+      rates[to].to_d * 1.to_d / rates[from].to_d
     end
 
     def self.currencies

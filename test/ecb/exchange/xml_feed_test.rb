@@ -31,7 +31,7 @@ class ECB::Exchange::XMLFeedTest < Minitest::Test
     stubbed_request = stub_endpoint
     rates = xml_feed.rates(rate_date)
     assert_requested stubbed_request
-    assert_equal rates.values_at('USD', 'JPY', 'BGN'), [1.1066, 113.23, 1.9558]
+    assert_equal rates.values_at('USD', 'JPY', 'BGN'), %w(1.1066 113.23 1.9558)
   end
 
   def test_caching_rates_after_fetch_from_api
@@ -40,15 +40,15 @@ class ECB::Exchange::XMLFeedTest < Minitest::Test
     xml_feed.rates(rate_date)
 
     assert_equal cache.read(rate_date.to_s).length, 32
-    assert_equal cache.read(rate_date.to_s)['USD'], 1.1066
+    assert_equal cache.read(rate_date.to_s)['USD'], '1.1066'
   end
 
   def test_does_not_overwrite_cached_rates_when_fetching
-    cache.write(rate_date.to_s, { 'USD' => 1337 })
+    cache.write(rate_date.to_s, { 'USD' => '1337' })
     xml_feed.rates(rate_date)
 
     assert_equal cache.read(rate_date.to_s).length, 1
-    assert_equal cache.read(rate_date.to_s)['USD'], 1337
+    assert_equal cache.read(rate_date.to_s)['USD'], '1337'
   end
 
   def test_includes_eur_rate_after_fetching

@@ -29,6 +29,18 @@ class ECB::ExchangeTest < Minitest::Test
     assert_equal ECB::Exchange.rate(from: 'USD', to: 'GBP', date: date).round(4), 0.7597
   end
 
+  def test_convert_returns_big_decimal
+    with_today_as("2016-09-19") do
+      assert_kind_of BigDecimal, ECB::Exchange.convert(100, from: 'USD', to: 'GBP')
+    end
+  end
+
+  def test_rate_returns_big_decimal
+    with_today_as("2016-09-19") do
+      assert_kind_of BigDecimal, ECB::Exchange.rate(from: 'USD', to: 'GBP')
+    end
+  end
+
   def test_rate_for_date_not_present
     date = Date.parse("2011-08-04")
     error = assert_raises(ECB::Exchange::DateNotFoundError) do

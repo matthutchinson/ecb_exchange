@@ -78,7 +78,7 @@ module ECB
 
         def self.parse_element(element)
           element.children.map(&:attributes).inject({}) do |memo, currency_with_rate|
-            memo[currency_with_rate['currency']] = currency_with_rate['rate'].to_f
+            memo[currency_with_rate['currency']] = currency_with_rate['rate']
             memo
           end
         end

@@ -1,68 +1,170 @@
-# ECB Exchange Convertor
+# ECB Exchange
+
+[![Gem Version](https://img.shields.io/gem/v/ecb_exchange.svg?style=flat)](http://rubygems.org/gems/ecb_exchange)
+[![Travis Build Status](https://travis-ci.org/matthutchinson/ecb_exchange.svg?branch=master)](https://travis-ci.org/matthutchinson/ecb_exchange)
+[![Maintainability](https://api.codeclimate.com/v1/badges/c67969dd7b921477bdcc/maintainability)](https://codeclimate.com/github/matthutchinson/ecb_exchange/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/c67969dd7b921477bdcc/test_coverage)](https://codeclimate.com/github/matthutchinson/ecb_exchange/test_coverage)
+[![Gem Dependency Status](https://gemnasium.com/badges/github.com/matthutchinson/ecb_exchange.svg)](https://gemnasium.com/github.com/matthutchinson/ecb_exchange)
+
+Currency conversion using the European Central Bank's foreign [exchange
+rates](http://www.ecb.europa.eu/stats/eurofxref/eurofxref-hist-90d.xml). Rates
+for the last 90 days are fetched and cached on demand. All calculations are
+  performed and returned as `BigDecimal`, usually a [good
+  idea](https://makandracards.com/makandra/1178-bigdecimal-arithmetic-in-ruby)
+  when dealing with money.
+
+## Requirements
+
+* Ruby >= 2.1.0
 
 ## Installation
 
-Add this line to your application's Gemfile:
+Add this line to your Gemfile and run `bundle install`:
 
 ```ruby
 gem 'ecb_exchange'
 ```
 
-And then execute:
-
-    $ bundle
-
-## Requirements
-
-This gem requires a working cache object that responds to read/write methods. By
-default the `Rails.cache` object will be used if it is available.
-
-Or you can configure your own cache backend store (in an initializer) like so;
-
-    ECB::Exchange::Cache.backend =  # your cache here ...
-
-If no backend cache store is available a `NullBackend` will be used and nothing
-will be cached.
-
-All rates stored in the cache are name-spaced with a key prefix.
-
 ## Usage
 
-Exchange rates can be fetched like so:
+To convert an amount from one currency to another use:
 
-    ECB::Exchange::XMLFeed.fetch
+```ruby
+ECB::Exchange.convert(100, from: 'EUR', to: 'GBP')
+=> 0.88235e2
+```
 
-The feed will fetch and cache ECB rates for the last 90 days. You can then ask
-for an exchange rate on a given day like so:
+The converted amount (using today's current rate) will be returned (as a
+`BigDecimal`). In doing so the gem will have fetched and cached ECB rates for
+the last 90 days.
 
-    ExchangeRate.at('2016-01-22', 'USD', 'GBP')
+You can ask the exchange to convert an amount on a specific date:
 
-If the cache is empty rates will be fetched from the endpoint and the cache will
-be populated. You can adjust which endpoint rates are fetched from in an
-initializer like so;
+```ruby
+ECB::Exchange.convert(100, from: 'EUR', to: 'GBP', date: Date.parse('2017-01-11'))
+=> 0.87235e2
+```
 
-    ECB::Exchange::XMLFeed.endpoint = "http://my-awesome-service.com/feed.xml"
+To return only the exchange rate multiplier between two currencies use:
 
-The XML feed must match the standard [ECB
-rates](http://www.ecb.europa.eu/stats/eurofxref/eurofxref-hist-90d.xml) structure.
+```ruby
+ECB::Exchange.rate(from: 'EUR', to: 'USD')
+=> 0.11969e1
+# you can pass an optional `date` argument to this method too
+```
 
-## Errors
+You can ask for an array of supported currency codes with:
 
-Not all dates and rates may be available, or the feed server may be down. You
-should consider how to handle the following errors.
+```ruby
+ECB::Exchange.currencies
+=> ["USD", "JPY", "BGN", "CZK", "DKK", "GBP", "HUF" ... ]
+```
+
+Finally, you can adjust the rates endpoint by setting the
+`XMLFeed.endpoint` (e.g. in an initializer):
+
+```ruby
+ECB::Exchange::XMLFeed.endpoint = "http://my-awesome-service.com/feed.xml"
+```
+
+The XML feed must conform to the [ECB
+rates](http://www.ecb.europa.eu/stats/eurofxref/eurofxref-hist-90d.xml)
+structure.
+
+## Handling Errors
+
+Not all dates, rates or currencies may be available, or the remote endpoint
+could be unresponsive. You should consider handling the following errors:
 
 * `ECB::Exchange::DateNotFoundError`
 * `ECB::Exchange::CurrencyNotFoundError`
 * `ECB::Exchange::ResponseError`
 * `ECB::Exchange::ParseError`
 
+Or rescue `ECB::Exchange::Error` to catch any of them.
+
+## Caching
+
+By default rates will be cached to one of the following backend stores (with
+this order of preference).
+
+* Your own backend cache store (see below)
+* The `Rails.cache`
+* An `ECB::Exchange::MemoryCache` instance (a simple in memory cache store)
+
+To configure your own backend store:
+
+```ruby
+ECB::Exchange::Cache.backend =  MyAwesomeCache.new
+# your cache must implement public `read(key)` and `write(key, value)` methods
+```
+
+All keys in the cache are name-spaced with a `ecb_exchange_rates_for_date-`
+prefix.
+
 ## Development
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake test` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+Check out this repo and run `bin/setup`, this will install gem dependencies and
+generate docs. Use `bundle exec rake` to run tests and generate a coverage
+report.
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+You can also run `bin/console` for an interactive prompt allowing you to
+experiment with the code.
+
+## Tests
+
+MiniTest is used for testing. Run the test suite with:
+
+    $ rake test
+
+## Docs
+
+Generate docs for this gem with:
+
+    $ rake rdoc
+
+## Troubles?
+
+If you think something is broken or missing, please raise a new
+[issue](https://github.com/matthutchinson/ecb_exchange/issues). Please remember
+to check it hasn't already been raised.
+
+## Contributing
+
+Bug [reports](https://github.com/matthutchinson/ecb_exchange/issues) and [pull
+requests](https://github.com/matthutchinson/ecb_exchange/pulls) are welcome on
+GitHub. When submitting pull requests, remember to add tests covering any new
+behaviour, and ensure all tests are passing on
+[Travis](https://travis-ci.org/matthutchinson/ecb_exchange). Read the
+[contributing
+guidelines](https://github.com/matthutchinson/ecb_exchange/blob/master/CONTRIBUTING.md)
+for more details.
+
+This project is intended to be a safe, welcoming space for collaboration, and
+contributors are expected to adhere to the [Contributor
+Covenant](http://contributor-covenant.org) code of conduct. See
+[here](https://github.com/matthutchinson/ecb_exchange/blob/master/CODE_OF_CONDUCT.md)
+for more details.
+
+
+## Todo
+
+* Better rdoc documentation
+* A small Rails app to demo this gem, with a one-click heroku install
+* Allow `Net::HTTP` to be swapped out for any another HTTP client
 
 ## License
 
-The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
+The code is available as open source under the terms of
+[LGPL-3](https://opensource.org/licenses/LGPL-3.0).
 
+## Links
+
+* [Travis CI](https://travis-ci.org/matthutchinson/ecb_exchange)
+* [Maintainability](https://codeclimate.com/github/matthutchinson/ecb_exchange/maintainability)
+* [Test Coverage](https://codeclimate.com/github/matthutchinson/ecb_exchange/test_coverage)
+* [RDoc](http://rdoc.info/projects/matthutchinson/ecb_exchange)
+* [Issues](http://github.com/matthutchinson/ecb_exchange/issues)
+* [Report a bug](http://github.com/matthutchinson/ecb_exchange/issues/new)
+* [Gem](http://rubygems.org/gems/ecb_exchange)
+* [GitHub](https://github.com/matthutchinson/ecb_exchange)

@@ -35,7 +35,7 @@ Gem::Specification.new do |spec|
 
   # documentation
   spec.has_rdoc         = true
-  spec.extra_rdoc_files = ['README.md', 'LICENSE.txt']
+  spec.extra_rdoc_files = ['README.md', 'LICENSE']
   spec.rdoc_options << '--title' << 'ECB Exchange' << '--main' << 'README.md' << '-ri'
 
   # non-gem dependecies
