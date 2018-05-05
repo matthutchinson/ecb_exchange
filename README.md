@@ -149,9 +149,9 @@ for more details.
 
 ## Todo
 
-* Better rdoc documentation
-* A small Rails app to demo this gem, with a one-click heroku install
-* Allow `Net::HTTP` to be swapped out for any another HTTP client
+* Better RDoc documentation.
+* A small Rails app to demo this gem, with a one-click heroku install.
+* Allow `Net::HTTP` to be swapped out for any another HTTP client.
 
 ## License
 
