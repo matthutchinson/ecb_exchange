@@ -1,7 +1,7 @@
 # coding: utf-8
-lib = File.expand_path('../lib', __FILE__)
+lib = File.expand_path("../lib", __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'ecb/exchange'
+require "ecb/exchange"
 
 Gem::Specification.new do |spec|
   spec.name    = "ecb_exchange"
@@ -20,10 +20,17 @@ Gem::Specification.new do |spec|
   are performed and returned as BigDecimal.
   EOF
 
-  # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
+  spec.metadata = {
+    "homepage_uri"    => "https://github.com/matthutchinson/ecb_exchange",
+    "changelog_uri"   => "https://github.com/matthutchinson/ecb_exchange/blob/master/CHANGELOG.md",
+    "source_code_uri" => "https://github.com/matthutchinson/ecb_exchange",
+    "bug_tracker_uri" => "https://github.com/matthutchinson/ecb_exchange/issues",
+  }
+
+  # Prevent pushing this gem to RubyGems.org. To allow pushes either set the "allowed_push_host"
   # to allow pushing to a single host or delete this section to allow pushing to any host.
   if spec.respond_to?(:metadata)
-    spec.metadata['allowed_push_host'] = "https://rubygems.org"
+    spec.metadata["allowed_push_host"] = "https://rubygems.org"
   else
     raise "RubyGems 2.0 or newer is required to protect against public gem pushes."
   end
@@ -35,8 +42,8 @@ Gem::Specification.new do |spec|
 
   # documentation
   spec.has_rdoc         = true
-  spec.extra_rdoc_files = ['README.md', 'LICENSE']
-  spec.rdoc_options << '--title' << 'ECB Exchange' << '--main' << 'README.md' << '-ri'
+  spec.extra_rdoc_files = ["README.md", "LICENSE"]
+  spec.rdoc_options << "--title" << "ECB Exchange" << "--main" << "README.md" << "-ri"
 
   # non-gem dependecies
   spec.required_ruby_version = ">= 2.1.0"
