@@ -4,20 +4,20 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'ecb/exchange'
 
 Gem::Specification.new do |spec|
-  spec.name          = "ecb_exchange"
-  spec.version       = ECB::Exchange::VERSION
-  spec.authors       = ["Matthew Hutchinson"]
-  spec.email         = ["matt@hiddenloop.com"]
+  spec.name    = "ecb_exchange"
+  spec.version = ECB::Exchange::VERSION
+  spec.authors = ["Matthew Hutchinson"]
+  spec.email   = ["matt@hiddenloop.com"]
 
-  spec.license       = "MIT"
-  spec.summary       = <<-EOF
-  Finds and converts exchange rates based on available ECB reference rates from
-  the last 90 days
+  spec.license = "MIT"
+  spec.summary = <<-EOF
+  Currency conversion using the European Central Bank's foreign exchange rates.
   EOF
 
   spec.description = <<-EOF
-  Finds (and caches) recent ECB reference rates, and provides an ExchangeRate
-  convertor between currencies supported by the ECB reference rate feed
+  Currency conversion using the European Central Bank's foreign exchange rates.
+  Rates for the last 90 days are fetched and cached on demand. All calculations
+  are performed and returned as BigDecimal.
   EOF
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
