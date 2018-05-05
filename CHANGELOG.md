@@ -12,6 +12,6 @@ adheres to [Semantic Versioning](Semver).
 - Initial version released.
 
 [Unreleased]: https://github.com/matthutchinson/ecb_exchange/compare/v0.1.0...HEAD
-[0.1.0]: https://github.com/matthutchinson/ecb_exchange/master@{1day}...v0.1.0
+[0.1.0]: https://github.com/matthutchinson/ecb_exchange/4b825dc642cb6eb9a060e54bf8d69288fbee4904...v0.1.0
 [KeepAChangelog]: http://keepachangelog.com/en/1.0.0/
 [Semver]: http://semver.org/spec/v2.0.0.html
