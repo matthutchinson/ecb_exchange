@@ -1,17 +1,16 @@
-if ENV['COVERAGE']
-  require 'simplecov'
-end
-
+require 'simplecov' if ENV['COVERAGE']
 require 'ecb_exchange'
 require 'minitest/autorun'
 require 'webmock/minitest'
+
+# test helper methods
 
 def valid_xml_response
   xml_response("eurofxref-hist-90d.xml")
 end
 
 def xml_response(filename)
-  fixture_dir = File.expand_path(File.dirname(__FILE__)+"/fixtures/")
+  fixture_dir = File.expand_path(File.dirname(__FILE__) + "/fixtures/")
   File.read("#{fixture_dir}/responses/#{filename}")
 end
 
