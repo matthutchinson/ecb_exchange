@@ -4,7 +4,7 @@
 [![Travis Build Status](https://travis-ci.org/matthutchinson/ecb_exchange.svg?branch=master)](https://travis-ci.org/matthutchinson/ecb_exchange)
 [![Maintainability](https://api.codeclimate.com/v1/badges/c67969dd7b921477bdcc/maintainability)](https://codeclimate.com/github/matthutchinson/ecb_exchange/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/c67969dd7b921477bdcc/test_coverage)](https://codeclimate.com/github/matthutchinson/ecb_exchange/test_coverage)
-[![Gem Dependency Status](https://gemnasium.com/badges/github.com/matthutchinson/ecb_exchange.svg)](https://gemnasium.com/github.com/matthutchinson/ecb_exchange)
+[![Depfu](https://badges.depfu.com/badges/7f97907cf3a676744bb90d782bd9cbe2/overview.svg)](https://depfu.com/github/matthutchinson/ecb_exchange)
 
 Currency conversion using the European Central Bank's foreign [exchange
 rates](http://www.ecb.europa.eu/stats/eurofxref/eurofxref-hist-90d.xml). Rates
