@@ -1,10 +1,10 @@
 # ECB Exchange
 
-[![Gem Version](https://img.shields.io/gem/v/ecb_exchange.svg?style=flat)](http://rubygems.org/gems/ecb_exchange)
-[![Travis Build Status](https://travis-ci.org/matthutchinson/ecb_exchange.svg?branch=master)](https://travis-ci.org/matthutchinson/ecb_exchange)
+[![Gem](https://img.shields.io/gem/v/ecb_exchange.svg?style=flat)](http://rubygems.org/gems/ecb_exchange)
+[![Travis](https://img.shields.io/travis/matthutchinson/ecb_exchange/master.svg?style=flat)](https://travis-ci.org/matthutchinson/ecb_exchange)
+[![Depfu](https://img.shields.io/depfu/matthutchinson/ecb_exchange.svg?style=flat)](https://depfu.com/github/matthutchinson/ecb_exchange)
 [![Maintainability](https://api.codeclimate.com/v1/badges/c67969dd7b921477bdcc/maintainability)](https://codeclimate.com/github/matthutchinson/ecb_exchange/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/c67969dd7b921477bdcc/test_coverage)](https://codeclimate.com/github/matthutchinson/ecb_exchange/test_coverage)
-[![Depfu](https://badges.depfu.com/badges/7f97907cf3a676744bb90d782bd9cbe2/overview.svg)](https://depfu.com/github/matthutchinson/ecb_exchange)
 
 Currency conversion using the European Central Bank's foreign [exchange
 rates](http://www.ecb.europa.eu/stats/eurofxref/eurofxref-hist-90d.xml). Rates
@@ -15,7 +15,7 @@ for the last 90 days are fetched and cached on demand. All calculations are
 
 ## Requirements
 
-* Ruby >= 2.1.0
+* [Ruby](http://ruby-lang.org/) >= 2.1.0
 
 ## Installation
 
@@ -27,7 +27,7 @@ gem 'ecb_exchange'
 
 ## Usage
 
-To convert an amount from one currency to another use:
+To convert an amount from one currency to another:
 
 ```ruby
 ECB::Exchange.convert(100, from: 'EUR', to: 'GBP')
@@ -35,8 +35,8 @@ ECB::Exchange.convert(100, from: 'EUR', to: 'GBP')
 ```
 
 The converted amount (using today's current rate) will be returned (as a
-`BigDecimal`). In doing so the gem will have fetched and cached ECB rates for
-the last 90 days.
+`BigDecimal`). In doing this the gem will fetch and cache ECB rates for the last
+90 days.
 
 You can ask the exchange to convert an amount on a specific date:
 
@@ -45,15 +45,14 @@ ECB::Exchange.convert(100, from: 'EUR', to: 'GBP', date: Date.parse('2017-01-11'
 => 0.87235e2
 ```
 
-To return only the exchange rate multiplier between two currencies use:
+To return only the exchange rate multiplier between two currencies:
 
 ```ruby
-ECB::Exchange.rate(from: 'EUR', to: 'USD')
+ECB::Exchange.rate(from: 'EUR', to: 'USD') # pass an optional `date` arg here too
 => 0.11969e1
-# you can pass an optional `date` argument to this method too
 ```
 
-You can ask for an array of supported currency codes with:
+You can ask for an array of all supported currencies with:
 
 ```ruby
 ECB::Exchange.currencies
@@ -67,14 +66,14 @@ Finally, you can adjust the rates endpoint by setting the
 ECB::Exchange::XMLFeed.endpoint = "http://my-awesome-service.com/feed.xml"
 ```
 
-The XML feed must conform to the [ECB
+The XML feed at this endpoint must conform to the [ECB
 rates](http://www.ecb.europa.eu/stats/eurofxref/eurofxref-hist-90d.xml)
 structure.
 
 ## Handling Errors
 
 Not all dates, rates or currencies may be available, or the remote endpoint
-could be unresponsive. You should consider handling the following errors:
+could be unresponsive, for these cases consider handling:
 
 * `ECB::Exchange::DateNotFoundError`
 * `ECB::Exchange::CurrencyNotFoundError`
@@ -85,18 +84,18 @@ Or rescue `ECB::Exchange::Error` to catch any of them.
 
 ## Caching
 
-By default rates will be cached to one of the following backend stores (with
-this order of preference).
+By default rates will be cached to one of the following backend stores (in this
+order of preference).
 
 * Your own backend cache store (see below)
-* The `Rails.cache`
+* `Rails.cache`
 * An `ECB::Exchange::MemoryCache` instance (a simple in memory cache store)
 
-To configure your own backend store:
+To configure your own backend store (e.g. in an initializer):
 
 ```ruby
 ECB::Exchange::Cache.backend =  MyAwesomeCache.new
-# your cache must implement public `read(key)` and `write(key, value)` methods
+# this cache must implement public `read(key)` and `write(key, value)` methods
 ```
 
 All keys in the cache are name-spaced with a `ecb_exchange_rates_for_date-`
@@ -108,8 +107,8 @@ Check out this repo and run `bin/setup`, this will install gem dependencies and
 generate docs. Use `bundle exec rake` to run tests and generate a coverage
 report.
 
-You can also run `bin/console` for an interactive prompt allowing you to
-experiment with the code.
+You can also run `bin/console` for an interactive prompt to experiment with the
+code.
 
 ## Tests
 
@@ -146,12 +145,10 @@ Covenant](http://contributor-covenant.org) code of conduct. See
 [here](https://github.com/matthutchinson/ecb_exchange/blob/master/CODE_OF_CONDUCT.md)
 for more details.
 
-
 ## Todo
 
 * Better RDoc documentation.
-* A small Rails app to demo this gem, with a one-click heroku install.
-* Allow `Net::HTTP` to be swapped out for any another HTTP client.
+* A Rails app to demo this gem (e.g. with a one-click Heroku install).
 
 ## License
 
@@ -160,11 +157,11 @@ The code is available as open source under the terms of
 
 ## Links
 
+* [Gem](http://rubygems.org/gems/ecb_exchange)
 * [Travis CI](https://travis-ci.org/matthutchinson/ecb_exchange)
 * [Maintainability](https://codeclimate.com/github/matthutchinson/ecb_exchange/maintainability)
 * [Test Coverage](https://codeclimate.com/github/matthutchinson/ecb_exchange/test_coverage)
 * [RDoc](http://rdoc.info/projects/matthutchinson/ecb_exchange)
 * [Issues](http://github.com/matthutchinson/ecb_exchange/issues)
 * [Report a bug](http://github.com/matthutchinson/ecb_exchange/issues/new)
-* [Gem](http://rubygems.org/gems/ecb_exchange)
 * [GitHub](https://github.com/matthutchinson/ecb_exchange)

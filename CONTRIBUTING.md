@@ -34,4 +34,3 @@ request gets accepted:
 * Write a good [commit
   message](http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html).
 * Write tests.
-
