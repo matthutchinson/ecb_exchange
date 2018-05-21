@@ -9,9 +9,9 @@
 Currency conversion using the European Central Bank's foreign [exchange
 rates](http://www.ecb.europa.eu/stats/eurofxref/eurofxref-hist-90d.xml). Rates
 for the last 90 days are fetched and cached on demand. All calculations are
-  performed and returned as `BigDecimal`, usually a [good
+  performed and returned as `BigDecimal` (usually a [good
   idea](https://makandracards.com/makandra/1178-bigdecimal-arithmetic-in-ruby)
-  when dealing with money.
+  when dealing with money).
 
 ## Requirements
 
@@ -27,25 +27,25 @@ gem 'ecb_exchange'
 
 ## Usage
 
-To convert an amount from one currency to another:
+Convert an amount from one currency to another:
 
 ```ruby
 ECB::Exchange.convert(100, from: 'EUR', to: 'GBP')
 => 0.88235e2
 ```
 
-The converted amount (using today's current rate) will be returned (as a
-`BigDecimal`). In doing this the gem will fetch and cache ECB rates for the last
+The converted amount (using today's current rate) will be returned as
+`BigDecimal`. In doing this, the gem will fetch and cache ECB rates for the last
 90 days.
 
-You can ask the exchange to convert an amount on a specific date:
+Convert an amount on a specific date:
 
 ```ruby
 ECB::Exchange.convert(100, from: 'EUR', to: 'GBP', date: Date.parse('2017-01-11'))
 => 0.87235e2
 ```
 
-To return only the exchange rate multiplier between two currencies:
+To fetch the exchange rate multiplier between two currencies:
 
 ```ruby
 ECB::Exchange.rate(from: 'EUR', to: 'USD') # pass an optional `date` arg here too
@@ -59,7 +59,7 @@ ECB::Exchange.currencies
 => ["USD", "JPY", "BGN", "CZK", "DKK", "GBP", "HUF" ... ]
 ```
 
-Finally, you can adjust the rates endpoint by setting the
+Finally, you can adjust the rates endpoint by setting your own
 `XMLFeed.endpoint` (e.g. in an initializer):
 
 ```ruby
@@ -73,7 +73,7 @@ structure.
 ## Handling Errors
 
 Not all dates, rates or currencies may be available, or the remote endpoint
-could be unresponsive, for these cases consider handling:
+could be unresponsive. For these cases consider handling these errors:
 
 * `ECB::Exchange::DateNotFoundError`
 * `ECB::Exchange::CurrencyNotFoundError`
