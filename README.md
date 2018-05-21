@@ -6,6 +6,8 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/c67969dd7b921477bdcc/maintainability)](https://codeclimate.com/github/matthutchinson/ecb_exchange/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/c67969dd7b921477bdcc/test_coverage)](https://codeclimate.com/github/matthutchinson/ecb_exchange/test_coverage)
 
+HA!
+
 Currency conversion using the European Central Bank's foreign [exchange
 rates](http://www.ecb.europa.eu/stats/eurofxref/eurofxref-hist-90d.xml). Rates
 for the last 90 days are fetched and cached on demand. All calculations are
