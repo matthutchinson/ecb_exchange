@@ -21,19 +21,12 @@ Gem::Specification.new do |spec|
   EOF
 
   spec.metadata = {
-    "homepage_uri"    => "https://github.com/matthutchinson/ecb_exchange",
-    "changelog_uri"   => "https://github.com/matthutchinson/ecb_exchange/blob/master/CHANGELOG.md",
-    "source_code_uri" => "https://github.com/matthutchinson/ecb_exchange",
-    "bug_tracker_uri" => "https://github.com/matthutchinson/ecb_exchange/issues",
+    "homepage_uri"      => "https://github.com/matthutchinson/ecb_exchange",
+    "changelog_uri"     => "https://github.com/matthutchinson/ecb_exchange/blob/master/CHANGELOG.md",
+    "source_code_uri"   => "https://github.com/matthutchinson/ecb_exchange",
+    "bug_tracker_uri"   => "https://github.com/matthutchinson/ecb_exchange/issues",
+    "allowed_push_host" => "https://rubygems.org"
   }
-
-  # Prevent pushing this gem to RubyGems.org. To allow pushes either set the "allowed_push_host"
-  # to allow pushing to a single host or delete this section to allow pushing to any host.
-  if spec.respond_to?(:metadata)
-    spec.metadata["allowed_push_host"] = "https://rubygems.org"
-  else
-    raise "RubyGems 2.0 or newer is required to protect against public gem pushes."
-  end
 
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
   spec.test_files    = `git ls-files -- {test}/*`.split("\n")
@@ -46,7 +39,7 @@ Gem::Specification.new do |spec|
   spec.rdoc_options << "--title" << "ECB Exchange" << "--main" << "README.md" << "-ri"
 
   # non-gem dependecies
-  spec.required_ruby_version = ">= 2.1.0"
+  spec.required_ruby_version = ">= 2.3"
 
   # dev gems
   spec.add_development_dependency "bundler"
