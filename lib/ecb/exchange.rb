@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 require 'date'
 require 'bigdecimal/util'
 
 module ECB
   module Exchange
-    VERSION = "0.1.2".freeze
+    VERSION = "0.2.0".freeze
 
     def self.convert(amount, from:, to:, date: Date.today)
       amount.to_d * rate(from: from, to: to, date: date)

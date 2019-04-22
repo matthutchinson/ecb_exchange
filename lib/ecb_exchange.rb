@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'ecb/exchange'
 require 'ecb/exchange/xml_feed'
 require 'ecb/exchange/memory_cache'

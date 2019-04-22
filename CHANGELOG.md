@@ -9,6 +9,12 @@ adheres to [Semantic Versioning](Semver).
 
 - Your contribution here!
 
+## [0.2.0] - 2019-04-22
+### Changed
+- Require at least Ruby 2.3 - earlier versions no longer supported.
+### Added
+- `# frozen_string_literal: true` to all Ruby files.
+
 ## [0.1.2] - 2018-05-05
 ### Changed
 - Updated gemspec meta data links.
@@ -21,7 +27,8 @@ adheres to [Semantic Versioning](Semver).
 ### Added
 - Initial version released.
 
-[Unreleased]: https://github.com/matthutchinson/ecb_exchange/compare/v0.1.2...HEAD
+[Unreleased]: https://github.com/matthutchinson/ecb_exchange/compare/v0.2.0...HEAD
+[0.1.2]: https://github.com/matthutchinson/ecb_exchange/compare/v0.1.2...v0.2.0
 [0.1.2]: https://github.com/matthutchinson/ecb_exchange/compare/v0.1.1...v0.1.2
 [0.1.1]: https://github.com/matthutchinson/ecb_exchange/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/matthutchinson/ecb_exchange/compare/e7366b3...v0.1.0

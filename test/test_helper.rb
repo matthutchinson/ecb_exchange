@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'simplecov' if ENV['COVERAGE']
 require 'ecb_exchange'
 require 'minitest/autorun'
