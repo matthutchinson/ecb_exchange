@@ -15,7 +15,7 @@ for the last 90 days are fetched and cached on demand. All calculations are
 
 ## Requirements
 
-* [Ruby](http://ruby-lang.org/) >= 2.1.0
+* [Ruby](http://ruby-lang.org/) >= 2.3
 
 ## Installation
 
