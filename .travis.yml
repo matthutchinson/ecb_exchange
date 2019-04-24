@@ -22,3 +22,11 @@ before_script:
  - ./cc-test-reporter before-build - GIT_COMMITTED_AT=$(if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then git log -1 --pretty=format:%ct; else git log -1 --skip 1 --pretty=format:%ct; fi)
 after_script:
  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+deploy:
+  provider: rubygems
+  api_key:
+    secure: OI1RxuPuZjF6T/nceKxPLgaxjqDPKH93rNisQ5YadS8sejSa8Luv72p2JmVdXIfkk/fe0KKU6VIq0wa+LKmnOzXaECU/Cibw8LWJ5ezxNQ/pYktTVk5fTGOIvkX8gMX+HomX92TKEM4D5lZIWZhTHm+bzF0B2mXtMOkDRwEDrxdkXCRAt6rINVEbqiBUK2fGEtJoYBvlz4jS98/5DROEwNQKcNk0JEoOY4CBURpLhAH/kW0qW7P4gL3rQbm8smSvvwdcnLnu1rPr5IotGvUry1yKkPpwFhJz86jmQCtEnVCh3OJ+l24Wz79SvVFKRrQh2SZzjO5QVQ4RLqE5OEI6ghDrfjBLx1JGziaPapBiqaCHxHNKAMOa8UHH0JBa00cDzGrHK52IQxA3Emmy0voLzTFEu8z+pOhN5zSxCaDJufedMHkAmutF4sElgnZjgeckB2GVNHlJn1Dv7Ao6M12zRzYxd0RviqKYGb/alrwrKiMo2g0dTz5PsVHi/iEFGHkqBXddCv6tMX04I+9rW61wemCf6Use1c0msLcZzFSfYutSYqk4/vtWtyVprW1VRGcnImaKrzACIWhtGnqazv6PfGVlvPgiTdevG80MiJnuba0sYSlMXFqToxbLv5oO3umMp1tfeueNtWXkx+gZoph0fvJtS2pbqY1ovyk0WhVGzSE=
+  gem: ecb_exchange
+  on:
+    tags: true
+    repo: matthutchinson/ecb_exchange
