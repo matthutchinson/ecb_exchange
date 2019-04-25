@@ -1,7 +1,7 @@
 # ECB Exchange
 
 [![Gem](https://img.shields.io/gem/v/ecb_exchange.svg?style=flat)](http://rubygems.org/gems/ecb_exchange)
-[![Travis](https://img.shields.io/travis/matthutchinson/ecb_exchange/master.svg?style=flat)](https://travis-ci.org/matthutchinson/ecb_exchange)
+[![Travis](https://img.shields.io/travis/com/matthutchinson/ecb_exchange/master.svg?style=flat)](https://travis-ci.com/matthutchinson/ecb_exchange)
 [![Depfu](https://img.shields.io/depfu/matthutchinson/ecb_exchange.svg?style=flat)](https://depfu.com/github/matthutchinson/ecb_exchange)
 [![Maintainability](https://api.codeclimate.com/v1/badges/c67969dd7b921477bdcc/maintainability)](https://codeclimate.com/github/matthutchinson/ecb_exchange/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/c67969dd7b921477bdcc/test_coverage)](https://codeclimate.com/github/matthutchinson/ecb_exchange/test_coverage)
@@ -134,7 +134,7 @@ Bug [reports](https://github.com/matthutchinson/ecb_exchange/issues) and [pull
 requests](https://github.com/matthutchinson/ecb_exchange/pulls) are welcome on
 GitHub. When submitting pull requests, remember to add tests covering any new
 behaviour, and ensure all tests are passing on
-[Travis](https://travis-ci.org/matthutchinson/ecb_exchange). Read the
+[Travis](https://travis-ci.com/matthutchinson/ecb_exchange). Read the
 [contributing
 guidelines](https://github.com/matthutchinson/ecb_exchange/blob/master/CONTRIBUTING.md)
 for more details.
@@ -158,7 +158,7 @@ The code is available as open source under the terms of
 ## Links
 
 * [Gem](http://rubygems.org/gems/ecb_exchange)
-* [Travis CI](https://travis-ci.org/matthutchinson/ecb_exchange)
+* [Travis CI](https://travis-ci.com/matthutchinson/ecb_exchange)
 * [Maintainability](https://codeclimate.com/github/matthutchinson/ecb_exchange/maintainability)
 * [Test Coverage](https://codeclimate.com/github/matthutchinson/ecb_exchange/test_coverage)
 * [RDoc](http://rdoc.info/projects/matthutchinson/ecb_exchange)
