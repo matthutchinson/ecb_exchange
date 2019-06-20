@@ -7,7 +7,7 @@
 [![Test Coverage](https://api.codeclimate.com/v1/badges/c67969dd7b921477bdcc/test_coverage)](https://codeclimate.com/github/matthutchinson/ecb_exchange/test_coverage)
 
 Currency conversion using the European Central Bank's foreign [exchange
-rates](http://www.ecb.europa.eu/stats/eurofxref/eurofxref-hist-90d.xml). Rates
+rates](https://www.ecb.europa.eu/stats/eurofxref/eurofxref-hist-90d.xml). Rates
 for the last 90 days are fetched and cached on demand. All calculations are
   performed and returned as `BigDecimal` (usually a [good
   idea](https://makandracards.com/makandra/1178-bigdecimal-arithmetic-in-ruby)
@@ -67,7 +67,7 @@ ECB::Exchange::XMLFeed.endpoint = "http://my-awesome-service.com/feed.xml"
 ```
 
 The XML feed at this endpoint must conform to the [ECB
-rates](http://www.ecb.europa.eu/stats/eurofxref/eurofxref-hist-90d.xml)
+rates](https://www.ecb.europa.eu/stats/eurofxref/eurofxref-hist-90d.xml)
 structure.
 
 ## Handling Errors
